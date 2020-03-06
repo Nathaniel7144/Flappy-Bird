@@ -8,6 +8,7 @@ public class PipeSpawner : MonoBehaviour
     [SerializeField] private Pipe pipeUp, pipeDown;
     [SerializeField] private float spawnInterval;
     [SerializeField] private float holeSize = 1f;
+    [SerializeField] private Point point;
 
     //Variable penampung coroutine
     private Coroutine CR_Spawn;
@@ -63,12 +64,18 @@ public class PipeSpawner : MonoBehaviour
         newPipeUp.transform.position += Vector3.up * (holeSize/2);
         newPipeDown.transform.position += Vector3.down * (holeSize/2);
 
-        //tempatkan posisi pipa yang telah dibentuk agar posisinya random
+        //Buat angka random untuk menentukan posisi pipa
         float y = Random.Range(-1.0f, 1.1f);
-
+        
+        //tempatkan posisi pipa yang telah dibentuk agar posisinya random
         newPipeUp.transform.position += Vector3.up * y;
         newPipeDown.transform.position += Vector3.up * y;
         
+        //Point
+        Point newPoint = Instantiate(point, transform.position,Quaternion.identity);
+        newPoint.gameObject.SetActive(true);
+        newPoint.SetSize(holeSize);
+        newPoint.transform.position += Vector3.up * y;
     }
 
     IEnumerator IeSpawn()

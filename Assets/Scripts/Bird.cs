@@ -1,13 +1,18 @@
 ﻿
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Bird : MonoBehaviour
 {
     //Global Variables
     [SerializeField] private float upForce = 100;
     [SerializeField] private bool isDead;
-    [SerializeField] private UnityEvent OnJump, OnDead;
+    [SerializeField] private UnityEvent OnJump, OnDead, OnAddPoint;
+    [SerializeField] private int score;
+
+    //UI
+    [SerializeField] private Text scoreText;
 
     //Rigidbody Bird
     private Rigidbody2D rigidBody2D;
@@ -81,5 +86,21 @@ public class Bird : MonoBehaviour
     {
         //Menghentikan animasi jika collide
         animator.enabled = false;
+    }
+
+    public void AddScore(int value)
+    {
+        //Menambahkan score value
+        score += value;
+
+        //Pengecekan null value
+        if(OnAddPoint != null)
+        {
+            //Memanggil semua event pada OnAddPoint
+            OnAddPoint.Invoke();
+        }
+
+        //Mengubah nilai text pada score text
+        scoreText.text = score.ToString();
     }
 }
